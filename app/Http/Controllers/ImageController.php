@@ -13,34 +13,6 @@ use Illuminate\Support\Facades\Storage;
 class ImageController extends Controller
 {
 
-    // public function uploadImage(Request $request)
-    // {
-    //     $request->validate([
-    //         'image' => 'required|image|mimes:jpeg,png,jpg',
-    //     ]);
-
-    //     $userId = auth()->id();
-
-    //     if (!$userId) {
-    //         return response()->json(['message' => 'User not authenticated'], 401);
-    //     }
-
-    //     $filePath = $request->file('image')->store('public/images');
-    //     $userImage = UserImage::create([
-    //         'user_id' => $userId,
-    //         'image_path' => $filePath,
-    //     ]);
-
-    //     // Dispatch job for background processing
-    //     dispatch(new GenerateImageJob($userImage->id, $filePath));
-    //     return response()->json([
-    //         'message' => 'Image uploaded successfully! Image processing is in the background.',
-    //         'image_path' => $filePath,
-    //         'image_id' => $userImage->id,
-    //     ], 201);
-    // }
-
-
     public function uploadImage(Request $request)
     {
         $request->validate([
@@ -53,29 +25,20 @@ class ImageController extends Controller
             return response()->json(['message' => 'User not authenticated'], 401);
         }
 
-        // Upload image to S3
-        $file = $request->file('image');
-        $fileName = time() . '_' . $file->getClientOriginalName(); // Unique file name
-        $filePath = 'images/' . $fileName; // S3 folder structure
-        $s3Path = Storage::disk('s3')->put($filePath, file_get_contents($file), 'public');
-
-        // Save the image path to the database
+        $filePath = $request->file('image')->store('public/images');
         $userImage = UserImage::create([
             'user_id' => $userId,
-            'image_path' => $filePath, // Use the S3 path here
+            'image_path' => $filePath,
         ]);
 
         // Dispatch job for background processing
         dispatch(new GenerateImageJob($userImage->id, $filePath));
-
         return response()->json([
             'message' => 'Image uploaded successfully! Image processing is in the background.',
-            'image_path' => Storage::disk('s3')->url($filePath), // Return the S3 URL
+            'image_path' => $filePath,
             'image_id' => $userImage->id,
         ], 201);
     }
-
-
 
     public function uploadChunk(Request $request)
     {

@@ -24,6 +24,29 @@ class GenerateImageJob implements ShouldQueue
         $this->filePath = $filePath;
     }
 
+    // public function handle()
+    // {
+    //     $userImage = UserImage::find($this->imageId);
+
+    //     if (!$userImage) {
+    //         Log::error('UserImage not found for imageId: ' . $this->imageId);
+    //         return;
+    //     }
+
+    //     if (env('API_CALL_ENABLE') == 1) {
+    //         $generatedImages = $this->generateImageVariations($this->filePath);
+    //     }
+
+    //     foreach ($generatedImages as $generatedImage) {
+    //         $generatedImagePath = 'public/images/generated_' . uniqid() . '.png';
+    //         Storage::put($generatedImagePath, file_get_contents($generatedImage['url']));
+
+    //         $userImage->generated_images()->create([
+    //             'url' => Storage::url($generatedImagePath),
+    //         ]);
+    //     }
+    // }
+
     public function handle()
     {
         $userImage = UserImage::find($this->imageId);
@@ -47,53 +70,54 @@ class GenerateImageJob implements ShouldQueue
         }
     }
 
+
     protected function generateImageVariations($filePath)
     {
-        return $this->getFallbackImages();
+        // return $this->getFallbackImages();
 
-        // $apiUrl = 'https://api.openai.com/v1/images/generations';
-        // $apiKey = env('OPENAI_API_KEY');
+        $apiUrl = 'https://api.openai.com/v1/images/generations';
+        $apiKey = env('OPENAI_API_KEY');
 
-        // $curl = curl_init();
-        // curl_setopt_array($curl, [
-        //     CURLOPT_URL => $apiUrl,
-        //     CURLOPT_RETURNTRANSFER => true,
-        //     CURLOPT_POST => true,
-        //     CURLOPT_POSTFIELDS => json_encode([
-        //         'model' => 'dall-e-3',
-        //         'n' => 1,
-        //         'size' => '1024x1024',
-        //         'image' => new \CURLFile(Storage::path($filePath)),
-        //     ]),
-        //     CURLOPT_HTTPHEADER => [
-        //         'Content-Type: application/json',
-        //         'Authorization' => 'Bearer ' . $apiKey,
-        //     ],
-        // ]);
+        $curl = curl_init();
+        curl_setopt_array($curl, [
+            CURLOPT_URL => $apiUrl,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => json_encode([
+                'model' => 'dall-e-3',
+                'n' => 1,
+                'size' => '1024x1024',
+                'image' => new \CURLFile(Storage::path($filePath)),
+            ]),
+            CURLOPT_HTTPHEADER => [
+                'Content-Type: application/json',
+                'Authorization' => 'Bearer ' . $apiKey,
+            ],
+        ]);
 
-        // $response = curl_exec($curl);
-        // Log::info('cURL Response:', ['response' => $response]);
+        $response = curl_exec($curl);
+        Log::info('cURL Response:', ['response' => $response]);
 
-        // if (curl_errno($curl)) {
-        //     Log::error('cURL error: ' . curl_error($curl));
-        //     curl_close($curl);
-        //     return $this->getFallbackImages();
-        // }
+        if (curl_errno($curl)) {
+            Log::error('cURL error: ' . curl_error($curl));
+            curl_close($curl);
+            return $this->getFallbackImages();
+        }
 
-        // curl_close($curl);
-        // $data = json_decode($response, true);
-        // Log::info('Decoded Response Data:', ['data' => $data]);
+        curl_close($curl);
+        $data = json_decode($response, true);
+        Log::info('Decoded Response Data:', ['data' => $data]);
 
-        // if (empty($data['data'])) {
-        //     return $this->getFallbackImages();
-        // }
+        if (empty($data['data'])) {
+            return $this->getFallbackImages();
+        }
 
-        // return $data['data'] ?? [];
+        return $data['data'] ?? [];
     }
 
     protected function getFallbackImages()
     {
-        Log::info('theskdljaljdl');
+        Log::info('Fetching fallback images...');
 
         $fallbackApiUrl = 'https://jsonplaceholder.typicode.com/albums/1/photos';
 
