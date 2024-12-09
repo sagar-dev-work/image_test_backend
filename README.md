@@ -35,9 +35,14 @@ This is a Laravel-based application built to handle simple SaaS application that
 
 ##### php artisan migrate
 
+##### php artisan make:seeder UserSeeder
+
 ## Run the Application Start the server:
 ##### php artisan serve
 ##### Access your application at: http://127.0.0.1:8000
+
+## Run command for storage link:
+#### php artisan storage:link
 
 ## Features
 
