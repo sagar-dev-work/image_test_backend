@@ -12,10 +12,8 @@ This is a Laravel-based application built to handle simple SaaS application that
 #  Steps to Install
 ## Clone the Repository
 
-# Clone the Repository
-
-### git clone <repository-url>
-### cd <project-directory>
+##### git clone <repository-url>
+##### cd <project-directory>
 
 # Install Dependencies
 
