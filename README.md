@@ -1,54 +1,51 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p> <p align="center"> <a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a> <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a> <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a> <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a> </p>
 
-## About This Project
+# About This Project
 This is a Laravel-based application built to handle simple SaaS application that allows users to upload an image, and then the application will generate variations of that image using a generative AI API. The app should provide the user with a dashboard to view, manage, and download the generated images.
 
-## Installation
-# Prerequisites
--PHP 8.0+
--Composer
--Database: MySQL
+# Installation
+## Prerequisites
+### PHP 8.0+
+### Composer
+### Database: MySQL
 
-## Steps to Install
+#  Steps to Install
+## Clone the Repository
+
 # Clone the Repository
 
-# Clone the Repository
-
-git clone <repository-url>
-cd <project-directory>
+### git clone <repository-url>
+### cd <project-directory>
 
 # Install Dependencies
 
-[composer install]
-npm install
-Configure Environment Copy .env.example to .env and update the necessary environment variables:
+### composer install
+### Configure Environment Copy .env.example to .env and update the necessary environment variables:
 
 
-cp .env.example .env
-Generate Application Key
+### cp .env.example .env
+
+## Generate Application Key
+#### php artisan key:generate
 
 
-php artisan key:generate
-Set Up Database
+## Set Up Database
+## Create a new database.
+## Update .env with database credentials.
 
-# Create a new database.
-Update .env with database credentials.
+## Run migrations:
 
-[Run migrations:]
+### php artisan migrate
 
-php artisan migrate
+## Run the Application Start the server:
+### php artisan serve
+### Access your application at: http://127.0.0.1:8000
 
-# Run the Application Start the server:
+# Features
 
+### Authentication: Secure login and registration.
 
-php artisan serve
-Access your application at: http://127.0.0.1:8000
+### Database Management: Leveraging Eloquent ORM for database interactions.
 
-## Features
-
-Authentication: Secure login and registration.
-
-Database Management: Leveraging Eloquent ORM for database interactions.
-
-Background Jobs: Process-heavy tasks handled via Laravel Queues.
-API Endpoints: For seamless integration with other platforms.
+### Background Jobs: Process-heavy tasks handled via Laravel Queues.
+### API Endpoints: For seamless integration with other platforms.
