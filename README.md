@@ -4,46 +4,46 @@
 This is a Laravel-based application built to handle simple SaaS application that allows users to upload an image, and then the application will generate variations of that image using a generative AI API. The app should provide the user with a dashboard to view, manage, and download the generated images.
 
 # Installation
-## Prerequisites
-### PHP 8.0+
-### Composer
-### Database: MySQL
+### Prerequisites
+##### PHP 8.0+
+##### Composer
+##### Database: MySQL
 
-#  Steps to Install
-## Clone the Repository
+##  Steps to Install
+### Clone the Repository
 
-##### git clone <repository-url>
-##### cd <project-directory>
+##### git clone https://github.com/sagar-dev-work/image_test_backend.git
+##### cd image_test_backend
 
-# Install Dependencies
+## Install Dependencies
 
-### composer install
-### Configure Environment Copy .env.example to .env and update the necessary environment variables:
-
-
-### cp .env.example .env
-
-## Generate Application Key
-#### php artisan key:generate
+##### composer install
+##### Configure Environment Copy .env.example to .env and update the necessary environment variables:
 
 
-## Set Up Database
-## Create a new database.
-## Update .env with database credentials.
+##### cp .env.example .env
 
-## Run migrations:
+### Generate Application Key
+##### php artisan key:generate
 
-### php artisan migrate
+
+### Set Up Database
+##### Create a new database.
+##### Update .env with database credentials.
+
+##### Run migrations:
+
+##### php artisan migrate
 
 ## Run the Application Start the server:
-### php artisan serve
-### Access your application at: http://127.0.0.1:8000
+##### php artisan serve
+##### Access your application at: http://127.0.0.1:8000
 
-# Features
+## Features
 
-### Authentication: Secure login and registration.
+##### Authentication: Secure login and registration.
 
-### Database Management: Leveraging Eloquent ORM for database interactions.
+##### Database Management: Leveraging Eloquent ORM for database interactions.
 
-### Background Jobs: Process-heavy tasks handled via Laravel Queues.
-### API Endpoints: For seamless integration with other platforms.
+##### Background Jobs: Process-heavy tasks handled via Laravel Queues.
+##### API Endpoints: For seamless integration with other platforms.
